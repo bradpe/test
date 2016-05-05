@@ -9,7 +9,6 @@ import java.util.List;
 public class Catalog
 {
     private List<TypeDef> types;
-    private boolean invalidated = false;
 
     Catalog()
     {
@@ -26,11 +25,4 @@ public class Catalog
         this.types = types;
     }
 
-    public boolean isInvalidated() {
-        return invalidated;
-    }
-
-    public void setInvalidated(boolean invalidated) {
-        this.invalidated = invalidated;
-    }
 }

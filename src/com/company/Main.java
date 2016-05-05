@@ -1,35 +1,32 @@
 package com.company;
 
 import com.company.lib.Catalog;
-import com.company.lib.CatalogFactory;
-import com.company.lib.TypeDef;
+import com.company.lib.CatalogProvider;
 
-import java.util.List;
-
-public class Main {
+public class Main implements IChangeable
+{
+    private boolean changed = false;
 
     public static void main(String[] args) {
 
-        CatalogFactory cf = new CatalogFactory();
-
+        CatalogProvider cf = new CatalogProvider();
 
         final Catalog c;
         c = cf.createCatalog();
 
-        cf.registerConfigChangeCallback(() -> {
-            System.out.println("inside config change");
-            c.setInvalidated(true);
-        });
+        cf.registerConfigChangeCallback(this);
 
-        List<TypeDef> t = c.getTypes();
-
-        c.setTypes(t);
-
-        System.out.println("Catalog is Invalidated = " + c.isInvalidated());
+        System.out.println("This changed = " + changed);
 
         cf.onConfigChange();
 
-        System.out.println("Catalog is Invalidated = " + c.isInvalidated());
+        System.out.println("This changed = " + changed);
 
+    }
+
+    public void changed()
+    {
+        System.out.println("Provider changed setting flag");
+        changed = true;
     }
 }
